@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import EditorPage from "./EditorPage";
 import "./App.css";
 import {
@@ -10,46 +10,39 @@ import RegisterPage from "./RegisterPage";
 import LoginPage from "./LoginPage";
 
 function App() {
-  const randomtoken = Math.random().toString(4);
-  localStorage.setItem("token", randomtoken);
-  const isAuthenticated = !!localStorage.getItem("token", randomtoken);
-  console.log(randomtoken);
+  // const [randomToken, setRandomToken] = useState("");
+
+  // useEffect(() => {
+  //   let token = localStorage.getItem("token");
+
+  //   if (!token) {
+  //     token = Math.random().toString(36).substr(2, 9);
+  //     localStorage.setItem("token", token);
+  //   }
+
+  //   setRandomToken(token);
+  // }, []);
+
+  const isAuthenticated = !!localStorage.getItem("token");
   console.log(isAuthenticated);
+
   const router = createBrowserRouter([
     {
       path: "/login",
-      element: (
-        <>
-          <LoginPage />
-        </>
-      ),
+      element: <LoginPage />,
     },
     {
       path: "/register",
-      element: (
-        <>
-          <RegisterPage />
-        </>
-      ),
+      element: <RegisterPage />,
     },
     {
       path: "/note/:id",
-      element: <>{isAuthenticated ? <EditorPage /> : <LoginPage />}</>,
+      element: isAuthenticated ? <EditorPage /> : <Navigate to="/login/" />,
     },
     {
-      path: "/note/:id",
+      path: "*",
       element: (
-        <>
-          <EditorPage />
-        </>
-      ),
-    },
-    {
-      path: "*", //for all the unique user id will be created
-      element: (
-        <>
-          <Navigate to={`/note/${Math.random().toString(36).substr(2, 9)}`} />
-        </>
+        <Navigate to={`/note/${Math.random().toString(36).substr(2, 9)}`} />
       ),
     },
   ]);
