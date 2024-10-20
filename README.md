@@ -24,7 +24,7 @@ Ensure that **Node.js** and **npm** are installed. You can download them from th
 1. Clone the repository:
     ```bash
     git clone https://github.com/your-username/notation.git
-    cd notation/app
+    cd app
     ```
 
 2. Install the dependencies:
